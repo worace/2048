@@ -114,13 +114,26 @@ QUnit.test("it renders itself onto a dom element", function( assert ) {
 QUnit.test("it shifts its value to neighbor square", function( assert ) {
   var dirs = ["left", "right", "top", "down"]
   for (var i in dirs) {
-    var sq = new Square(2)
+    var sq = new Square(2);
     var dir = dirs[i];
     sq[dir] = new Square(2);
     sq.shift(dir, 0);
     assert.equal(0, sq.value, dir);
     assert.equal(4, sq[dir].value);
   }
+});
+
+QUnit.test("it shifts across empty squares", function( assert ) {
+  var sq = new Square(2);
+  var middle = new Square(0);
+  var right = new Square(2);
+  middle.right = right;
+  sq.right = middle;
+
+  sq.shift("right", 0);
+  assert.equal(0, sq.value);
+  assert.equal(0, middle.value);
+  assert.equal(4, right.value);
 });
 
 QUnit.skip("it fills another square on arrow key press", function( assert ) {

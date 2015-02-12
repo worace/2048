@@ -41,8 +41,12 @@ Square.prototype.domElement = function() {
 
 Square.prototype.shift = function(dir, value) {
   if (this[dir]) {
-    this[dir].shift(dir, this.value);
-    this.value = value;
+    if (this.value === 0) {
+      this[dir].shift(dir, value);
+    } else {
+      this[dir].shift(dir, this.value);
+      this.value = value;
+    }
   } else {
     this.value = this.value + value;
   }
