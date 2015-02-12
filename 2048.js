@@ -39,12 +39,21 @@ Square.prototype.domElement = function() {
   return $sq;
 }
 
-function Grid(width, height) {
+//Init a grid of specified width and height
+//optVals allows provision of explicit numeric
+//values for testing
+function Grid(width, height, optVals) {
   this.width = width;
   this.height = height;
   this.startingVals = [2,4];
   this.squares = [];
   this.populateGrid()
+
+  if (optVals) {
+    for (var i in this.squares) {
+      this.squares[i].value = optVals[i];
+    }
+  }
 }
 
 Grid.prototype.populateGrid = function() {
@@ -55,6 +64,17 @@ Grid.prototype.populateGrid = function() {
     } else {
       this.squares.push(new Square(0));
     }
+  }
+  this.assignEdges();
+}
+
+Grid.prototype.assignEdges = function() {
+  for (var i in this.squares) {
+    var sq = this.squares[i]
+    sq.top = this.squares[(i - this.width)];
+    sq.right = this.squares[(i + 1)];
+    sq.down = this.squares[(i + this.width)];
+    sq.left = this.squares[(i - 1)];
   }
 }
 
