@@ -70,11 +70,16 @@ Grid.prototype.populateGrid = function() {
 
 Grid.prototype.assignEdges = function() {
   for (var i in this.squares) {
+    i = parseInt(i)
     var sq = this.squares[i]
     sq.top = this.squares[(i - this.width)];
-    sq.right = this.squares[(i + 1)];
+    if (!(i % this.width === this.width - 1)) {
+      sq.right = this.squares[(i + 1)];
+    }
     sq.down = this.squares[(i + this.width)];
-    sq.left = this.squares[(i - 1)];
+    if (!(i % this.width == 0)) {
+      sq.left = this.squares[(i - 1)];
+    }
   }
 }
 
