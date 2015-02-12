@@ -42,30 +42,6 @@ QUnit.test("it populates with 2 pre-filled squares", function( assert ) {
   assert.equal(14, zeros.length);
 });
 
-QUnit.test("it assigns edges to squares", function( assert ) {
-  var g = new Grid(4,4,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-  assert.equal(5, g.squares[5].value);
-  //  1
-  //4 5 6
-  //  9
-  assert.equal(1, g.squares[5].top.value);
-  assert.equal(6, g.squares[5].right.value);
-  assert.equal(9, g.squares[5].down.value);
-  assert.equal(4, g.squares[5].left.value);
-});
-
-QUnit.test("edges of edge squares are undefined", function( assert ) {
-  var g = new Grid(4,4,[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]);
-  assert.equal(undefined, g.squares[0].left);
-  assert.equal(undefined, g.squares[0].top);
-  assert.equal(undefined, g.squares[3].right);
-  assert.equal(undefined, g.squares[3].top);
-  assert.equal(undefined, g.squares[12].left);
-  assert.equal(undefined, g.squares[12].bottom);
-  assert.equal(undefined, g.squares[15].right);
-  assert.equal(undefined, g.squares[15].bottom);
-});
-
 QUnit.skip("it combines values when shifting", function( assert ) {
   var g = new Grid(2,2);
   // 2 2

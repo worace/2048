@@ -124,22 +124,6 @@ Grid.prototype.populateGrid = function() {
       this.squares.push(new Square(0));
     }
   }
-  this.assignEdges();
-}
-
-Grid.prototype.assignEdges = function() {
-  for (var i = 0; i < this.squares.length; i++) {
-    i = parseInt(i)
-    var sq = this.squares[i]
-    sq.top = this.squares[(i - this.width)];
-    if (!(i % this.width === this.width - 1)) {
-      sq.right = this.squares[(i + 1)];
-    }
-    sq.down = this.squares[(i + this.width)];
-    if (!(i % this.width == 0)) {
-      sq.left = this.squares[(i - 1)];
-    }
-  }
 }
 
 Grid.prototype.startingVal = function() {
