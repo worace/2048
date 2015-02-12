@@ -52,6 +52,31 @@ Square.prototype.shift = function(dir, value) {
   }
 }
 
+function Group(squares) {
+  this.squares = squares;
+}
+
+Group.prototype.swapSquareValues = function(sq1, sq2) {
+  var v1 = sq1.value;
+  var v2 = sq2.value;
+  sq1.value = v2;
+  sq2.value = v1;
+}
+
+Group.prototype.shift = function() {
+  for (var i = 0; i < this.squares.length; i ++) {
+    var sq = this.squares[i];
+    var neighbor = this.squares[i+1];
+    if (neighbor && neighbor.empty()) {
+      this.swapSquareValues(sq, neighbor);
+    }
+    if (neighbor && neighbor.value === sq.value) {
+      neighbor.value = sq.value + neighbor.value;
+      sq.value = 0;
+    }
+  }
+}
+
 //Init a grid of specified width and height
 //optVals allows provision of explicit numeric
 //values for testing

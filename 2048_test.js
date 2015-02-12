@@ -123,25 +123,49 @@ QUnit.test("it shifts its value to neighbor square", function( assert ) {
   }
 });
 
-QUnit.test("it shifts across empty squares", function( assert ) {
-  var sq = new Square(2);
-  var middle = new Square(0);
-  var right = new Square(2);
-  middle.right = right;
-  sq.right = middle;
-
-  sq.shift("right", 0);
-  assert.equal(0, sq.value);
-  assert.equal(0, middle.value);
-  assert.equal(4, right.value);
-});
-
 QUnit.skip("it fills another square on arrow key press", function( assert ) {
   new TFE().init("#grid-root");
   assert.equal(2, filledSquares().length);
   triggerKeyPress("left");
   assert.equal(3, filledSquares().length);
 });
+
+// Group
+QUnit.test("it inits with squares", function( assert ) {
+  var sq1 = new Square(2);
+  var sq2 = new Square(0);
+  var g = new Group([sq1, sq2]);
+  assert.equal(g.squares.length, 2);
+});
+
+QUnit.test("it combines same value squares", function( assert ) {
+  var sq1 = new Square(2);
+  var sq2 = new Square(2);
+  new Group([sq1, sq2]).shift();
+  assert.equal(sq1.value, 0);
+  assert.equal(sq2.value, 4);
+});
+
+QUnit.test("it shifts full squares into empty squares", function( assert ) {
+  var sq1 = new Square(2);
+  var sq2 = new Square(0);
+  new Group([sq1, sq2]).shift();
+  assert.equal(sq1.value, 0);
+  assert.equal(sq2.value, 2);
+});
+
+QUnit.test("it combines across empty squares", function( assert ) {
+  var squares = [new Square(2), new Square(0), new Square(0), new Square(2)]
+  var g = new Group(squares)
+  g.shift();
+
+  assert.equal(0, g.squares[0].value);
+  assert.equal(0, g.squares[1].value);
+  assert.equal(0, g.squares[2].value);
+  assert.equal(4, g.squares[3].value);
+});
+
+
 
 function triggerKeyPress(dir) {
   var e = jQuery.Event("keydown");
