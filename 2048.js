@@ -39,19 +39,6 @@ Square.prototype.domElement = function() {
   return $sq;
 }
 
-Square.prototype.shift = function(dir, value) {
-  if (this[dir]) {
-    if (this.value === 0) {
-      this[dir].shift(dir, value);
-    } else {
-      this[dir].shift(dir, this.value);
-      this.value = value;
-    }
-  } else {
-    this.value = this.value + value;
-  }
-}
-
 function Group(squares) {
   this.squares = squares;
 }
@@ -146,10 +133,37 @@ Grid.prototype.render = function($element) {
   });
 }
 
-Grid.prototype.shift = function(dir) {
-  this.squares.forEach(function(sq) {
-    sq.shift(dir);
+Grid.prototype.rows = function() {
+  var rows =[];
+  for (var i = 0; i < this.width; i ++) {
+    rows.push(this.squares.slice(i * this.width, i * this.width + this.width));
+  }
+  return rows;
+}
+Grid.prototype.cols = function() {
+  var cols =[];
+  for (var i = 0; i < this.width; i ++) {
+    cols.push(_.pluck(this.rows(), i));
+  }
+  return cols;
+}
+
+Grid.prototype.shiftGroups = function(groups) {
+  groups.forEach(function(group) {
+    new Group(group).shift();
   });
+}
+
+Grid.prototype.shift = function(dir) {
+  if (dir === "right") {
+    this.shiftGroups(this.rows());
+  } else if (dir === "left") {
+    this.shiftGroups(this.rows().map(function(r) { return r.reverse() }));
+  } else if (dir === "up") {
+    this.shiftGroups(this.cols().map(function(c) { return c.reverse() }));
+  } else if (dir === "down") {
+    this.shiftGroups(this.cols());
+  }
 }
 
 function TFE() {

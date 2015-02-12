@@ -42,20 +42,50 @@ QUnit.test("it populates with 2 pre-filled squares", function( assert ) {
   assert.equal(14, zeros.length);
 });
 
-QUnit.skip("it combines values when shifting", function( assert ) {
+QUnit.test("it finds rows", function( assert ) {
+  var g = new Grid(3,3);
+  _.each(g.squares, function(sq, i) {
+    sq.value = i;
+  });
+  assert.equal(3, g.rows().length);
+  assert.deepEqual(_.pluck(g.rows()[0], "value"), [0,1,2]);
+  assert.deepEqual(_.pluck(g.rows()[1], "value"), [3,4,5]);
+  assert.deepEqual(_.pluck(g.rows()[2], "value"), [6,7,8]);
+});
+
+QUnit.test("it finds cols", function( assert ) {
+  var g = new Grid(3,3);
+  _.each(g.squares, function(sq, i) {
+    sq.value = i;
+  });
+  assert.equal(3, g.cols().length);
+  assert.deepEqual(_.pluck(g.cols()[0], "value"), [0,3,6]);
+  assert.deepEqual(_.pluck(g.cols()[1], "value"), [1,4,7]);
+  assert.deepEqual(_.pluck(g.cols()[2], "value"), [2,5,8]);
+});
+
+QUnit.test("it combines values when shifting", function( assert ) {
   var g = new Grid(2,2);
-  // 2 2
-  // 2 2
   g.squares.forEach(function(sq) {
     sq.value = 2;
   });
-  assert.equal(4, g.squares.filter(function(sq) { return !sq.empty() } ).length);
-  g.shift("left")
-  // 4 0
-  // 4 0
-  assert.equal(2, g.squares.filter(function(sq) { return !sq.empty() } ).length);
-});
+  g.shift("right")
+  assert.deepEqual([0,4,0,4], _.pluck(g.squares, "value"));
 
+  var g = new Grid(2,2);
+  g.squares.forEach(function(sq) {
+    sq.value = 2;
+  });
+  g.shift("left")
+  assert.deepEqual([4,0,4,0], _.pluck(g.squares, "value"));
+
+  var g = new Grid(2,2);
+  g.squares.forEach(function(sq) {
+    sq.value = 2;
+  });
+  g.shift("up")
+  assert.deepEqual([4,4,0,0], _.pluck(g.squares, "value"));
+});
 
 // Square
 
@@ -85,18 +115,6 @@ QUnit.test("it renders itself onto a dom element", function( assert ) {
   assert.equal(0, $elem.children().length);
   new Square(5).render($elem);
   assert.equal(1, $elem.children(".square").length);
-});
-
-QUnit.test("it shifts its value to neighbor square", function( assert ) {
-  var dirs = ["left", "right", "top", "down"]
-  for (var i in dirs) {
-    var sq = new Square(2);
-    var dir = dirs[i];
-    sq[dir] = new Square(2);
-    sq.shift(dir, 0);
-    assert.equal(0, sq.value, dir);
-    assert.equal(4, sq[dir].value);
-  }
 });
 
 QUnit.skip("it fills another square on arrow key press", function( assert ) {
