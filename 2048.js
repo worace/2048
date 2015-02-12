@@ -1,3 +1,6 @@
+keyCode = function(dir) {
+  return {left: 37, up: 38, right: 39, down:40}[dir];
+}
 var Utils = {
   rand: function(length) {
     return Math.floor((Math.random() * (length - 1)));

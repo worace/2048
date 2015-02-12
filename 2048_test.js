@@ -10,11 +10,35 @@ QUnit.test("has a 4x4 grid", function( assert ) {
 
 QUnit.test("it inits with 2 filled squares", function( assert ) {
   new TFE().init("#grid-root");
+  assert.equal(2, filledSquares().length);
+});
+
+QUnit.test("it finds arrow key codes", function( assert ) {
+  assert.equal(37, keyCode("left"));
+  assert.equal(38, keyCode("up"));
+  assert.equal(39, keyCode("right"));
+  assert.equal(40, keyCode("down"));
+});
+
+QUnit.test("it fills another square on arrow key press", function( assert ) {
+  new TFE().init("#grid-root");
+  assert.equal(2, filledSquares().length);
+  triggerKeyPress("left");
+  //assert.equal(3, filledSquares().length);
+});
+
+function triggerKeyPress(dir) {
+  var e = jQuery.Event("keydown");
+  e.which = keyCode(dir);
+  $("document").trigger(e);
+}
+
+var filledSquares = function() {
   var filled = $(".square").filter(function(i) {
     return $(this).html() !== "";
   });
-  assert.equal(2, filled.length);
-});
+  return filled
+}
 
 var arrayContainsArray = function(container, target) {
   for (var i in container) {
