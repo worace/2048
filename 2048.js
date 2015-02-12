@@ -63,18 +63,39 @@ Group.prototype.swapSquareValues = function(sq1, sq2) {
   sq2.value = v1;
 }
 
-Group.prototype.shift = function() {
-  for (var i = 0; i < this.squares.length; i ++) {
-    var sq = this.squares[i];
-    var neighbor = this.squares[i+1];
+Group.prototype.performSwaps = function(squares) {
+  for (var i = 0; i < squares.length; i ++) {
+    var sq = squares[i];
+    var neighbor = squares[i+1];
     if (neighbor && neighbor.empty()) {
       this.swapSquareValues(sq, neighbor);
     }
+  }
+}
+
+Group.prototype.combineSquares = function(squares) {
+  for (var i = squares.length - 1; i >= 0; i --) {
+    var sq = squares[i];
+    var neighbor = squares[i - 1];
     if (neighbor && neighbor.value === sq.value) {
-      neighbor.value = sq.value + neighbor.value;
-      sq.value = 0;
+      sq.value = neighbor.value + sq.value;
+      var previous = squares[i - 2];
+      if (previous) {
+        // pull value from neighbor's neighbor into
+        // newly created space where neighbor was
+        neighbor.value = previous.value;
+        previous.value = 0;
+      } else {
+        neighbor.value = 0;
+      }
+      this.performSwaps(squares);
     }
   }
+}
+
+Group.prototype.shift = function() {
+  this.performSwaps(this.squares);
+  this.combineSquares(this.squares);
 }
 
 //Init a grid of specified width and height

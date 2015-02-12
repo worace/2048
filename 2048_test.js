@@ -165,7 +165,40 @@ QUnit.test("it combines across empty squares", function( assert ) {
   assert.equal(4, g.squares[3].value);
 });
 
+QUnit.test("it doesnt combine different numbers", function( assert ) {
+  var squares = [new Square(2), new Square(0), new Square(0), new Square(4)]
+  var g = new Group(squares)
+  g.shift();
 
+  assert.equal(0, g.squares[0].value);
+  assert.equal(0, g.squares[1].value);
+  assert.equal(2, g.squares[2].value);
+  assert.equal(4, g.squares[3].value);
+});
+
+QUnit.test("it only allows 1 combination per square per shift", function( assert ) {
+  var squares = [new Square(2), new Square(2), new Square(2), new Square(2)]
+  var g = new Group(squares)
+  g.shift();
+
+  // 2 2 2 2 -> 0 0 4 4
+  // getting 2 0 2 4
+  assert.equal(g.squares[0].value, 0); // getting 2
+  assert.equal(g.squares[1].value, 0); // pass
+  assert.equal(g.squares[2].value, 4); // getting 2
+  assert.equal(g.squares[3].value, 4); // pass
+});
+
+QUnit.test("leaves odd matches out", function( assert ) {
+  var squares = [new Square(0), new Square(2), new Square(2), new Square(2)]
+  var g = new Group(squares)
+  g.shift();
+
+  assert.equal(0, g.squares[0].value);
+  assert.equal(0, g.squares[1].value);
+  assert.equal(2, g.squares[2].value);
+  assert.equal(4, g.squares[3].value);
+});
 
 function triggerKeyPress(dir) {
   var e = jQuery.Event("keydown");
