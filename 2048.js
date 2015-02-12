@@ -1,5 +1,5 @@
 keyCode = function(dir) {
-  return {left: 37, up: 38, right: 39, down:40}[dir];
+  return {37: "left", 38: "up", 39: "right", 40: "down", left: 37, up: 38, right: 39, down:40}[dir];
 }
 var Utils = {
   rand: function(length) {
@@ -9,6 +9,7 @@ var Utils = {
     return array.indexOf(element) > -1;
   }
 }
+
 function TFE() {
   this.width = 4;
   this.height = 4;
@@ -16,6 +17,21 @@ function TFE() {
 
   this.init = function(rootSelector) {
     this.$root = $(rootSelector);
+    this.populateGrid();
+    this.attachKeyListeners();
+  }
+
+  this.keyPress = function(dir) {
+    if (dir === undefined) return;
+  }
+
+  this.attachKeyListeners = function() {
+    $("body").keydown(function(event) {
+      this.keyPress(keyCode(event.which));
+    }.bind(this));
+  }
+
+  this.populateGrid = function() {
     var filledIndices = this.filledIndices(this.width * this.height);
     for(var i = 0; i < this.width * this.height; i++) {
       if (Utils.contains(filledIndices, i)) {

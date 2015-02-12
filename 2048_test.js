@@ -24,7 +24,7 @@ QUnit.test("it fills another square on arrow key press", function( assert ) {
   new TFE().init("#grid-root");
   assert.equal(2, filledSquares().length);
   triggerKeyPress("left");
-  //assert.equal(3, filledSquares().length);
+  assert.equal(3, filledSquares().length);
 });
 
 function triggerKeyPress(dir) {
