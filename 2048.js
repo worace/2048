@@ -42,7 +42,6 @@ Square.prototype.domElement = function() {
 function Grid(width, height) {
   this.width = width;
   this.height = height;
-  this.numSquares = width * height;
   this.startingVals = [2,4];
   this.squares = [];
   this.populateGrid()
@@ -79,6 +78,9 @@ Grid.prototype.render = function($element) {
   }
 }
 
+Grid.prototype.shift = function(dir) {
+}
+
 function TFE() {
   this.width = 4;
   this.height = 4;
@@ -92,7 +94,9 @@ TFE.prototype.init = function(rootSelector) {
 }
 
 TFE.prototype.keyPress = function(dir) {
-  if (dir === undefined) return;
+  if (dir !== undefined) {
+    this.grid.shift(dir)
+  };
 }
 
 TFE.prototype.attachKeyListeners = function() {

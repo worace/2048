@@ -42,6 +42,13 @@ QUnit.test("it populates with 2 pre-filled squares", function( assert ) {
   assert.equal(14, zeros.length);
 });
 
+QUnit.test("it adds a new value when shifted", function( assert ) {
+  var g = new Grid(4,4);
+  assert.equal(2, g.squares.filter(function(sq) { return !sq.empty() } ).length);
+  g.shift("left");
+  assert.equal(3, g.squares.filter(function(sq) { return !sq.empty() } ).length);
+});
+
 
 // Square
 
@@ -83,7 +90,7 @@ QUnit.skip("it fills another square on arrow key press", function( assert ) {
 function triggerKeyPress(dir) {
   var e = jQuery.Event("keydown");
   e.which = keyCode(dir);
-  $("document").trigger(e);
+  $("body").trigger(e);
 }
 
 var filledSquares = function() {
