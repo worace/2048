@@ -63,7 +63,7 @@ function Grid(width, height, optVals) {
   this.populateGrid()
 
   if (optVals) {
-    for (var i in this.squares) {
+    for (var i = 0; i < this.squares.length; i++) {
       this.squares[i].value = optVals[i];
     }
   }
@@ -82,7 +82,7 @@ Grid.prototype.populateGrid = function() {
 }
 
 Grid.prototype.assignEdges = function() {
-  for (var i in this.squares) {
+  for (var i = 0; i < this.squares.length; i++) {
     i = parseInt(i)
     var sq = this.squares[i]
     sq.top = this.squares[(i - this.width)];
@@ -111,15 +111,15 @@ Grid.prototype.preFilledIndices = function(length) {
 }
 
 Grid.prototype.render = function($element) {
-  for (var i in this.squares) {
-    this.squares[i].render($element);
-  }
+  this.squares.forEach(function(sq) {
+    sq.render($element);
+  });
 }
 
 Grid.prototype.shift = function(dir) {
-  for (var i in this.squares) {
-    this.squares[i].shift(dir);
-  }
+  this.squares.forEach(function(sq) {
+    sq.shift(dir);
+  });
 }
 
 function TFE() {

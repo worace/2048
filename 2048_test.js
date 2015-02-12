@@ -30,13 +30,13 @@ QUnit.test("it populates with 2 pre-filled squares", function( assert ) {
   var g = new Grid(4,4)
   var zeros = [];
   var others = [];
-  for (i in g.squares) {
-    if (g.squares[i].empty()) {
-      zeros.push(g.squares[i]);
+  g.squares.forEach(function(sq) {
+    if (sq.empty()) {
+      zeros.push(sq);
     } else {
-      others.push(g.squares[i]);
+      others.push(sq);
     }
-  }
+  });
 
   assert.equal(2, others.length);
   assert.equal(14, zeros.length);
@@ -70,9 +70,9 @@ QUnit.skip("it combines values when shifting", function( assert ) {
   var g = new Grid(2,2);
   // 2 2
   // 2 2
-  for (var i in g.squares) {
-    g.squares[i].value = 2;
-  }
+  g.squares.forEach(function(sq) {
+    sq.value = 2;
+  });
   assert.equal(4, g.squares.filter(function(sq) { return !sq.empty() } ).length);
   g.shift("left")
   // 4 0
