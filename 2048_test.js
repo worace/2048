@@ -111,6 +111,18 @@ QUnit.test("it renders itself onto a dom element", function( assert ) {
   assert.equal(1, $elem.children(".square").length);
 });
 
+QUnit.test("it shifts its value to neighbor square", function( assert ) {
+  var dirs = ["left", "right", "top", "down"]
+  for (var i in dirs) {
+    var sq = new Square(2)
+    var dir = dirs[i];
+    sq[dir] = new Square(2);
+    sq.shift(dir, 0);
+    assert.equal(0, sq.value, dir);
+    assert.equal(4, sq[dir].value);
+  }
+});
+
 QUnit.skip("it fills another square on arrow key press", function( assert ) {
   new TFE().init("#grid-root");
   assert.equal(2, filledSquares().length);

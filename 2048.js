@@ -39,6 +39,15 @@ Square.prototype.domElement = function() {
   return $sq;
 }
 
+Square.prototype.shift = function(dir, value) {
+  if (this[dir]) {
+    this[dir].shift(dir, this.value);
+    this.value = value;
+  } else {
+    this.value = this.value + value;
+  }
+}
+
 //Init a grid of specified width and height
 //optVals allows provision of explicit numeric
 //values for testing
@@ -104,6 +113,9 @@ Grid.prototype.render = function($element) {
 }
 
 Grid.prototype.shift = function(dir) {
+  for (var i in this.squares) {
+    this.squares[i].shift(dir);
+  }
 }
 
 function TFE() {
