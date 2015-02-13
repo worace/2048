@@ -1,6 +1,6 @@
 module("Grid Tests");
 QUnit.test("it inits with width and height", function( assert ) {
-  assert.equal(4, new Grid(4).width);
+  assert.equal(4, new Grid(4, 4).width);
   assert.equal(5, new Grid(4, 5).height);
 });
 

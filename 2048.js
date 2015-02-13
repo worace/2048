@@ -99,7 +99,7 @@ Group.prototype.shift = function() {
 function Grid(width, height, optVals) {
   this.width = width;
   this.height = height;
-  this.startingVals = [2,4];
+  this.startingVals = [2,2,2,2,4];
   this.squares = [];
   this.populateGrid()
 
@@ -111,25 +111,24 @@ function Grid(width, height, optVals) {
 }
 
 Grid.prototype.populateGrid = function() {
-  var preFilledIndices = this.preFilledIndices(this.width * this.height);
   for(var i = 0; i < this.width * this.height; i++) {
-    if (Utils.contains(preFilledIndices, i)) {
-      this.squares.push(new Square(this.startingVal()));
-    } else {
-      this.squares.push(new Square(0));
-    }
+    this.squares.push(new Square(0));
   }
+  _(2).times(function() { this.fillRandomSquare(); }.bind(this));
 }
 
 Grid.prototype.fillRandomSquare = function() {
   var empties = _.select(this.squares, function(sq) {
     return sq.empty();
   });
-  _.sample(empties).value = this.startingVal();
+  var empty = _.sample(empties)
+  if (empty) {
+    empty.value = this.startingVal();
+  }
 }
 
 Grid.prototype.startingVal = function() {
-  return this.startingVals[Utils.rand(this.startingVals.length - 1)];
+  return _.sample(this.startingVals);
 }
 
 Grid.prototype.preFilledIndices = function(length) {
@@ -181,9 +180,9 @@ Grid.prototype.shift = function(dir) {
   }
 }
 
-function TFE() {
-  this.width = 4;
-  this.height = 4;
+function TFE(width) {
+  this.width = width;
+  this.height = width;
   this.grid = new Grid(this.width, this.height);
 }
 
@@ -203,7 +202,7 @@ TFE.prototype.keyPress = function(dir) {
 }
 
 TFE.prototype.attachKeyListeners = function() {
-  $("body").keyup(function(event) {
+  $("body").keydown(function(event) {
     this.keyPress(keyCode(event.which));
   }.bind(this));
 }

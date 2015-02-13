@@ -11,7 +11,12 @@
   <script src="plugins/underscore.js"></script>
   <script src="2048.js"></script>
   <script>
-    new TFE().init("#game");
+    //width: 110px;
+
+    var width = 6;
+    var boardWidth = 120 * width + "px"
+    $("#game").css("width", boardWidth);
+    new TFE(width).init("#game");
   </script>
 </body>
 </html>
