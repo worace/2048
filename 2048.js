@@ -33,9 +33,11 @@ Square.prototype.render = function($element) {
 
 Square.prototype.domElement = function() {
   var square = document.createElement("div");
+  var p = document.createElement("p");
+  $(p).html(this.htmlContent());
   var $sq = $(square);
   $sq.addClass("square");
-  $sq.html(this.htmlContent())
+  $sq.append(p);
   return $sq;
 }
 
@@ -51,13 +53,16 @@ Group.prototype.swapSquareValues = function(sq1, sq2) {
 }
 
 Group.prototype.performSwaps = function(squares) {
+  var swapped = false;
   for (var i = 0; i < squares.length; i ++) {
     var sq = squares[i];
     var neighbor = squares[i+1];
-    if (neighbor && neighbor.empty()) {
+    if (neighbor && neighbor.empty() && !sq.empty()) {
       this.swapSquareValues(sq, neighbor);
+      swapped = true;
     }
   }
+  return swapped;
 }
 
 Group.prototype.combineSquares = function(squares) {
@@ -81,7 +86,10 @@ Group.prototype.combineSquares = function(squares) {
 }
 
 Group.prototype.shift = function() {
-  this.performSwaps(this.squares);
+  var swapped = true;
+  while (swapped) {
+   swapped = this.performSwaps(this.squares);
+  }
   this.combineSquares(this.squares);
 }
 
@@ -111,6 +119,13 @@ Grid.prototype.populateGrid = function() {
       this.squares.push(new Square(0));
     }
   }
+}
+
+Grid.prototype.fillRandomSquare = function() {
+  var empties = _.select(this.squares, function(sq) {
+    return sq.empty();
+  });
+  _.sample(empties).value = this.startingVal();
 }
 
 Grid.prototype.startingVal = function() {
@@ -181,11 +196,14 @@ TFE.prototype.init = function(rootSelector) {
 TFE.prototype.keyPress = function(dir) {
   if (dir !== undefined) {
     this.grid.shift(dir)
+    $(".square").remove();
+    this.grid.fillRandomSquare();
+    this.grid.render(this.$root);
   };
 }
 
 TFE.prototype.attachKeyListeners = function() {
-  $("body").keydown(function(event) {
+  $("body").keyup(function(event) {
     this.keyPress(keyCode(event.which));
   }.bind(this));
 }

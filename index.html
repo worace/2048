@@ -3,13 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>2048</title>
+  <link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
-  <div id="grid-root"></div>
+  <div id="game"></div>
   <script src="plugins/jquery-2.1.3.min.js"></script>
+  <script src="plugins/underscore.js"></script>
   <script src="2048.js"></script>
   <script>
-    new TFE().init("#grid-root");
+    new TFE().init("#game");
   </script>
 </body>
 </html>
