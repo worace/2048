@@ -239,7 +239,7 @@ QUnit.test("it finds arrow key codes", function( assert ) {
 
 
 function triggerKeyPress(dir) {
-  var e = jQuery.Event("keyup");
+  var e = jQuery.Event("keydown");
   e.which = keyCode(dir);
   $("body").trigger(e);
 }

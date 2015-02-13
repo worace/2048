@@ -181,8 +181,8 @@ Grid.prototype.shift = function(dir) {
 }
 
 function TFE(width) {
-  this.width = width;
-  this.height = width;
+  this.width = width || 4;
+  this.height = this.width;
   this.grid = new Grid(this.width, this.height);
 }
 
