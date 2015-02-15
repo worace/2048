@@ -9,10 +9,14 @@
   <div id="game"></div>
   <script src="plugins/jquery-2.1.3.min.js"></script>
   <script src="plugins/underscore.js"></script>
-  <script src="2048.js"></script>
+  <!-- js sources -->
+  <script src="lib/utils.js"></script>
+  <script src="lib/shift-group.js"></script>
+  <script src="lib/grid.js"></script>
+  <script src="lib/square.js"></script>
+  <script src="lib/tfe.js"></script>
   <script>
-    //width: 110px;
-
+    //game initialization
     var width = 4;
     var boardWidth = 120 * width + "px"
     $("#game").css("width", boardWidth);
