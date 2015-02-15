@@ -20,3 +20,16 @@
 .square p {
   padding-left: 40px;
 }
+
+.value-0 { background-color: #AAAAAA }
+.value-2 { background-color :#FFDC00 }
+.value-4 { background-color: #3D9970 }
+.value-8 { background-color: #FF4136 }
+.value-16 { background-color: #B10DC9 }
+.value-32 { background-color: #0074D9 }
+.value-64 { background-color: #01FF70 }
+.value-128 { background-color: #85144b }
+.value-256 { background-color: #2ECC40 }
+.value-512 { background-color: #FF851B }
+.value-1024 { background-color: #39CCCC }
+.value-2048 { background-color: #F012BE }

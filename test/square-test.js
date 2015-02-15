@@ -26,3 +26,11 @@ QUnit.test("it renders itself onto a dom element", function( assert ) {
   new Square(5).render($elem);
   assert.equal(1, $elem.children(".square").length);
 });
+
+QUnit.test("it includes provided identifier when rendering", function( assert ) {
+  var $elem = $(document.createElement("div"));
+  assert.equal(0, $elem.children().length);
+  new Square(5).render($elem, 4);
+  assert.equal(1, $elem.children(".square").length);
+  assert.equal(1, $elem.children("#square-4").length);
+});
