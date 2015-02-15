@@ -22,6 +22,25 @@ QUnit.test("it shifts full squares into empty squares", function( assert ) {
   assert.equal(sq2.value, 2);
 });
 
+QUnit.test("it assigns roundEnd for squares as it shifts", function( assert ) {
+  var sq1 = new Square(2, 1);
+  var sq2 = new Square(0, 2);
+  new Group([sq1, sq2]).shift();
+  assert.equal(2, sq1.roundEnd.id);
+
+  assert.equal(2, sq2.roundEnd.id);
+});
+
+QUnit.test("it tracks roundEnd for square shifted across multiple empty squares", function( assert ) {
+  var squares = [new Square(2, 1), new Square(0, 2), new Square(0, 3), new Square(0, 4)]
+  var g = new Group(squares)
+  g.shift();
+
+  assert.equal(4, squares[0].roundEnd.id);
+  assert.equal(1, squares[0].roundStart.id);
+  assert.equal(1, squares[3].roundStart.id);
+});
+
 QUnit.test("it combines across empty squares", function( assert ) {
   var squares = [new Square(2), new Square(0), new Square(0), new Square(2)]
   var g = new Group(squares)

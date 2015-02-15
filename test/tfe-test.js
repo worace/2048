@@ -1,7 +1,6 @@
 module("TFE (integration) tests");
 QUnit.test("it fills another square on arrow key press", function( assert ) {
   var tfe = new TFE();
-  tfe.grid = new Grid(3,3);
   tfe.grid.squares.forEach(function(sq) {
     sq.value = 0;
   });
@@ -21,8 +20,15 @@ QUnit.test("it shifts the rendered grid on key press", function( assert ) {
   tfe.grid.squares[1].value = 2;
   tfe.init("#grid-root");
 
+
   triggerKeyPress("left");
-  assert.equal($($(".square p")[0]).html(), "2");
+  var done = assert.async();
+  //animation duration is 250 ms, so give it that long to finish
+  setTimeout(function() {
+    assert.equal($($(".square p")[0]).html(), "2");
+    done();
+  }, 250);
+
 });
 
 QUnit.test("it finds root div", function( assert ) {

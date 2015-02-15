@@ -18,7 +18,9 @@
 }
 
 .square p {
-  padding-left: 40px;
+  margin: 0;
+  width: 110px;
+  height: 110px;
 }
 
 .value-0 { background-color: #AAAAAA }
