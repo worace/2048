@@ -23,6 +23,8 @@
   height: 110px;
 }
 
+.animating { color: red; }
+
 .value-0 { background-color: #AAAAAA }
 .value-2 { background-color :#FFDC00 }
 .value-4 { background-color: #3D9970 }

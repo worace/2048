@@ -27,7 +27,7 @@ QUnit.test("it shifts the rendered grid on key press", function( assert ) {
   setTimeout(function() {
     assert.equal($($(".square p")[0]).html(), "2");
     done();
-  }, 250);
+  }, 350);
 
 });
 
